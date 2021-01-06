@@ -1,0 +1,108 @@
+{
+  "fileName": "Japan post 001806660185 - source.xlsx",
+  "Header": "ABCDEFGHI",
+  "recordIndexColumn": "A",
+  "recordIndexValue": "取引日",
+  "recordIndexHeader": "Y",
+  "updatedDate": {
+    "dataType": "Date",
+    "dateFormat": "OK",
+    "mappingType": "Expression",
+    "mappingStatement": "linesDf['A']"
+  },
+  "outputColumns": {
+    "StatementDate": {
+      "dataType": "Date",
+      "initialCreation": "N",
+      "dateFormat": "OK",
+      "mappingType": "Expression",
+      "mappingStatement": "linesDf['A']"
+    },
+    "CashManagementAccount": {
+      "dataType": "Str",
+      "initialCreation": "N",
+      "mappingType": "Expression",
+      "mappingStatement": "df.at[3,'A'].replace('-','')[-14:][:6]+df.at[3,'A'].replace('-','')[-14:][-6:]"
+    },
+    "Intraday": {
+      "dataType": "Str",
+      "initialCreation": "N",
+      "mappingType": "Fixed",
+      "mappingStatement": "False"
+    },
+    "Currency": {
+      "dataType": "Str",
+      "initialCreation": "N",
+      "mappingType": "Fixed",
+      "mappingStatement": "JPY"
+    },
+    "StatementOpeningLedger": {
+      "dataType": "Float",
+      "initialCreation": "N",
+      "mappingType": "Empty"
+    },
+    "StatementClosingLedger": {
+      "dataType": "Float",
+      "initialCreation": "Y",
+      "mappingType": "Function",
+      "mappingStatement": "closingBalancePerDay('StatementClosingLedger','I')"
+    },
+    "StatementOpeningAvailable": {
+      "dataType": "Float",
+      "initialCreation": "N",
+      "mappingType": "Empty"
+    },
+    "StatementClosingAvailable": {
+      "dataType": "Float",
+      "initialCreation": "Y",
+      "mappingType": "Function",
+      "mappingStatement": "closingBalancePerDay('StatementClosingAvailable','I')"
+    },
+    "ValueDate": {
+      "dataType": "Date",
+      "initialCreation": "N",
+      "dateFormat": "OK",
+      "mappingType": "Expression",
+      "mappingStatement": "linesDf['A']"
+    },
+    "BankTransactionTypeCode": {
+      "dataType": "Str",
+      "initialCreation": "N",
+      "mappingType": "Fixed",
+      "mappingStatement": "NTRF"
+    },
+    "DebitCreditIndicator": {
+      "dataType": "Str",
+      "initialCreation": "N",
+      "mappingType": "Expression",
+      "mappingStatement": "['Credit' if pd.isna(x) else 'Debit' for x in linesDf['F']]"
+    },
+    "LineAmount": {
+      "dataType": "Float",
+      "initialCreation": "N",
+      "mappingType": "Expression",
+      "mappingStatement": "[(0 if pd.isna(y) else float(y)) - (0 if pd.isna(x) else float(x))  for x, y in zip(linesDf['F'], linesDf['D'])]"
+    },
+    "BankReferenceNumber": {
+      "dataType": "Str",
+      "initialCreation": "N",
+      "mappingType": "Empty"
+    },
+    "RelatedReference": {
+      "dataType": "Str",
+      "initialCreation": "N",
+      "mappingType": "Empty"
+    },
+    "TextReferenceNumber": {
+      "dataType": "Str",
+      "initialCreation": "N",
+      "mappingType": "Empty"
+    },
+    "Description": {
+      "dataType": "Str",
+      "initialCreation": "N",
+      "mappingType": "Expression",
+      "mappingStatement": "linesDf['G']"
+    }
+  }
+}

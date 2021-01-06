@@ -1,0 +1,111 @@
+{
+  "fileName": "Sathapana USD - source.xlsx",
+  "Header": "ABCDEFGHIJKLMNOPQ",
+  "recordIndexColumn": "A",
+  "recordIndexValue": "2",
+  "recordIndexHeader": "N",
+  "updatedDate": {
+    "dataType": "Date",
+    "dateFormat": "%d-%b-%Y",
+    "mappingType": "Expression",
+    "mappingStatement": "[x[:11] for x in linesDf['B']]"
+  },
+  "outputColumns": {
+    "StatementDate": {
+      "dataType": "Date",
+      "initialCreation": "N",
+      "dateFormat": "%d-%b-%Y",
+      "mappingType": "Expression",
+      "mappingStatement": "[x[:11] for x in linesDf['B']]"
+    },
+    "CashManagementAccount": {
+      "dataType": "Str",
+      "initialCreation": "N",
+      "mappingType": "Expression",
+      "mappingStatement": "df.at[6,'N']"
+    },
+    "Intraday": {
+      "dataType": "Str",
+      "initialCreation": "N",
+      "mappingType": "Fixed",
+      "mappingStatement": "False"
+    },
+    "Currency": {
+      "dataType": "Str",
+      "initialCreation": "N",
+      "mappingType": "Expression",
+      "mappingStatement": "df.at[2,'M'][-3:]"
+    },
+    "ValueDate": {
+      "dataType": "Date",
+      "initialCreation": "N",
+      "dateFormat": "%d-%b-%Y",
+      "mappingType": "Expression",
+      "mappingStatement": "[x[:11] for x in linesDf['D']]"
+    },
+    "BankTransactionTypeCode": {
+      "dataType": "Str",
+      "initialCreation": "N",
+      "mappingType": "Expression",
+      "mappingStatement": "['FCHG' if x in ['COM','MSC'] else 'FMSC' for x in linesDf['E'] ]"
+    },
+    "DebitCreditIndicator": {
+      "dataType": "Str",
+      "initialCreation": "N",
+      "mappingType": "Expression",
+      "mappingStatement": "['Debit' if float(x) >0 else 'Credit' for x in linesDf['L']]"
+    },
+    "LineAmount": {
+      "dataType": "Float",
+      "initialCreation": "N",
+      "mappingType": "Expression",
+      "mappingStatement": "-linesDf['L']+linesDf['O']"
+    },
+    "BankReferenceNumber": {
+      "dataType": "Str",
+      "initialCreation": "N",
+      "mappingType": "Expression",
+      "mappingStatement": "linesDf['J']"
+    },
+    "RelatedReference": {
+      "dataType": "Str",
+      "initialCreation": "N",
+      "mappingType": "Empty"
+    },
+    "TextReferenceNumber": {
+      "dataType": "Str",
+      "initialCreation": "N",
+      "mappingType": "Empty"
+    },
+    "Description": {
+      "dataType": "Str",
+      "initialCreation": "N",
+      "mappingType": "Expression",
+      "mappingStatement": "linesDf['G']"
+    },
+    "StatementOpeningLedger": {
+      "dataType": "Float",
+      "initialCreation": "Y",
+      "mappingType": "Function",
+      "mappingStatement": "openingBalancePerDay('StatementOpeningLedger','P')"
+    },
+    "StatementOpeningAvailable": {
+      "dataType": "Float",
+      "initialCreation": "Y",
+      "mappingType": "Function",
+      "mappingStatement": "openingBalancePerDay('StatementOpeningAvailable','P')"
+    },
+    "StatementClosingLedger": {
+      "dataType": "Float",
+      "initialCreation": "Y",
+      "mappingType": "Function",
+      "mappingStatement": "closingBalancePerDay('StatementClosingLedger','P')"
+    },
+    "StatementClosingAvailable": {
+      "dataType": "Float",
+      "initialCreation": "Y",
+      "mappingType": "Function",
+      "mappingStatement": "closingBalancePerDay('StatementClosingAvailable','P')"
+    }
+  }
+}
