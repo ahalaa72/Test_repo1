@@ -1,4 +1,0 @@
-This is a test file to examine fetch feature in Github
-
-
-Test Test
